@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body,li,ul{
+            margin:0;
+            padding:0;
+            list-style: none;
+        }
+        .container{
+            width:300px;
+            height: 300px;
+            border:8px ridge snow;
+            border-radius: 50%;
+            margin:50px auto;
+            position: relative;
+            box-shadow: 0 0 25px 0 #000 inset;
+        }
+        .container>ul{
+            width: 200px;
+            height: 54px;
+            position: absolute;
+            left:0;
+            right:0;
+            bottom: -70px;
+            margin:0 auto;
+            text-align: center;
+        }
+        .container>ul li{
+            width: 100px;
+            float: left;
+        }
+        [type=range]{
+            width: 96px;
+            height: 26px;
+        }
+        article{
+            position: absolute;
+            top: -50px;
+            left: 50px;
+        }
+        section{
+            text-shadow: 0 4px 3px gray;
+        }
+        [type=color]{
+            position: relative;
+            left: 120px;
+            top: -20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul>
+            <li>
+                R <input type="range" max="255" value="0">
+            </li>
+            <li>
+                G <input type="range" max="255" value="0">
+            </li>
+            <li>
+                B <input type="range" max="255" value="0">
+            </li>
+            <li>
+                α <input type="range" max="100" value="100">
+            </li>
+        </ul>
+        <article>
+            <section>system color: </section>
+            <input type="color">
+        </article>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var getColor = {
+            showColor: document.querySelector(".container"),
+            ranges: document.querySelectorAll("input"),
+            activeColor(){
+                this.getBarColor();
+                this.changeColor();
+                this.getSystemColor();
+            },
+//          根据拖动条显示颜色
+            getBarColor(){
+                let redColor = this.ranges[0].value;
+                let greenColor = this.ranges[1].value;
+                let blueColor = this.ranges[2].value;
+                let opacityColor = this.ranges[3].value / 100;
+                this.showColor.style.backgroundColor=`rgba(
+                ${redColor},
+                ${greenColor},
+                ${blueColor},
+                ${opacityColor})`;
+
+                this.ranges[4].value =`#${this.ten2sixteen(redColor)}${this.ten2sixteen(greenColor)}${this.ten2sixteen(blueColor)}`;
+            },
+//            根据系统颜色选择
+            getSystemColor(){
+                this.ranges[4].onchange=()=>{
+                    let sysColor =this.ranges[4].value;
+                    this.showColor.style.backgroundColor= sysColor;
+                    this.ranges[3].value = 100;
+                    let splitSysColor = (sysColor.match(/\w+/g))[0].split("");
+                    let redSysColor = Number("0x"+(splitSysColor[0]+splitSysColor[1]));
+                    let greenSysColor = Number("0x"+(splitSysColor[2]+splitSysColor[3]));
+                    let blueSysColor = Number("0x"+(splitSysColor[4]+splitSysColor[5]));
+                    this.ranges[0].value = redSysColor;
+                    this.ranges[1].value = greenSysColor;
+                    this.ranges[2].value = blueSysColor;
+                }
+            },
+//          当拖动条value改变时，颜色对应显示
+            changeColor(){
+                for(let i=0;i<this.ranges.length;i++){
+                    this.ranges[i].onchange=()=>{
+                        this.getBarColor();
+                    }
+                }
+            },
+//          将10进制数转变为16进制
+            ten2sixteen(num){
+                let changeNum = parseFloat(num).toString(16);
+                changeNum = num<=15? "0"+changeNum :changeNum;
+                 return changeNum;
+            }
+        }
+        getColor.activeColor();
+    }
+</script>
+</html>
