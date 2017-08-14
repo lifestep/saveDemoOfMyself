@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .container{
+            width: 300px;
+            height: 180px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left:0;
+            margin:auto;
+            border: 30px solid #555555;
+            border-image:url("3.png") 700 700 stretch;
+        }
+        .container img{
+            width:100%;
+            height:100%;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="1.jpg" alt="">
+    </div>
+</body>
+<script>
+    let wrap = document.querySelectorAll(".container")[0];
+    let img = document.querySelectorAll("img")[0];
+    let wrapBorderW = parseFloat(getComputedStyle(wrap).borderWidth);
+    let wrapW = wrap.offsetWidth - wrapBorderW*2;
+    let wrapH = wrap.offsetHeight - wrapBorderW*2;
+
+    let arrStep = [];
+    wrap.onmouseenter = function(e){
+        let x = -1*(e.offsetX - wrapW/2);
+        let y = e.offsetY - wrapH/2;
+        let angleOfMonseEnter = Math.atan2(y,x) * 180 / Math.PI + 180;
+        let p = 1- wrap.offsetHeight / wrap.offsetWidth;
+
+        if(angleOfMonseEnter < 90*p || angleOfMonseEnter > 360 - 90*p){
+//            console.log("to left")
+            img.style.left="100px";
+            moveImg(300,function(p){
+                img.style.left = 100*(1-p) +"px";
+                img.style.opacity = p;
+            })
+        }else if(angleOfMonseEnter > 90*p && angleOfMonseEnter < 180 - 90*p){
+//            console.log("to bottom")
+            img.style.top="-100px";
+            moveImg(300,function(p){
+                img.style.top = -100*(1-p) +"px";
+                img.style.opacity = p;
+            })
+        }else if(angleOfMonseEnter > 180 - 90*p && angleOfMonseEnter < 180 + 90*p){
+//            console.log("to right")
+            img.style.left="-100px";
+            moveImg(300,function(p){
+                img.style.left = -100*(1-p) +"px";
+                img.style.opacity = p;
+            })
+        }else if(angleOfMonseEnter > 180 + 90*p && angleOfMonseEnter < 360 - 90*p){
+//            console.log("to top")
+            img.style.top="100px";
+            moveImg(300,function(p){
+                img.style.top = 100*(1-p) +"px";
+                img.style.opacity = p;
+            })
+        }
+    }
+
+    wrap.onmouseleave = function(){
+        moveImg(300,function(p){
+            img.style.opacity = 1-p;
+        })
+    }
+
+
+
+    function moveImg(time,doSomething) {
+        let timeChange = 0;
+        let animationId;
+        animationId = setInterval(()=>{
+            doSomething(timeChange/time);
+            timeChange+=10;
+            if(timeChange/time > 1) clearInterval(animationId);
+        },10)
+    }
+
+</script>
+</html>
