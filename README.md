@@ -1,2 +1,2 @@
 # saveDemoOfMyself
-save some useful demo myself
+save some useful demo
