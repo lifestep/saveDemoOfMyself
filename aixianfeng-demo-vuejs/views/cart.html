@@ -1,0 +1,181 @@
+<article>
+	<div class="cart_empty" ng-class="{true:'visited',false:'hidden'}[GoodsCountInCart <= 0]">
+		<div class="cart_empty_content">
+			<span>亲，购物车空空的耶~</span>
+			<a href="../index_views/mobile_index.html#/market">去逛逛</a>
+		</div>
+	</div>
+	<div class="cart_filling" ng-class="{true:'hidden',false:'visited'}[GoodsCountInCart <= 0]">
+		<section class="customer_msg">
+			<dl>
+				<dt>名字：老王</dt>
+				<dd>电话：12306</dd>
+				<dd>地址：天上人间</dd>
+			</dl>
+			<a href="">修改 &gt;</a>
+		</section>
+		<section class="cart_msg">
+			<div class="cart_msg_top">
+				<div class="cart_msg_top_msg">
+					<span>闪送超市</span>
+					<span>凑单专区</span>
+					<span>¥0起送，22:00前满¥30免运费，22:00后满¥50免运费</span>
+				</div>
+				<div class="cart_msg_receive_time">
+					<span>收货时间&nbsp;&nbsp;<var>30分钟送达</var></span>
+					<span>可预订&nbsp;&gt;</span>
+				</div>
+				<div class="cart_msg_goods_letter">
+					
+				</div>
+				<div class="cart_msg_body">
+					
+				</div>
+			</div>
+		</section>
+	</div>
+</article>
+
+<style type="text/css">
+/*initial style*/
+	.hidden{
+		display: none;
+	}
+	.visited{
+		display: block;
+	}
+	article{
+		width: 100%;
+		height: 100%;
+	}
+	.cart_empty{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #EFEFEF;
+		padding-top: 6rem;
+	}
+	.cart_empty_content{
+		width: 40%;
+		height: 40%;
+		color: lightgray;
+		text-align: center;
+		background: url('../../images/boot_gps1.png') center top no-repeat;
+		background-size: 80%;
+		margin: 0 auto;
+		padding-top: 40%;
+	}
+	.cart_empty_content>span{
+		white-space: nowrap;
+
+	}
+	.cart_empty_content>a{
+		display: inline-block;
+		white-space: nowrap;
+		padding: 0.2rem 3rem;
+		border: .1rem solid lightgray;
+		border-radius: .3rem;
+		color: lightgray;
+		margin-top: 10%;
+	}
+	.cart_filling{
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: #EFEFEF;
+	}
+	.customer_msg{
+		width: 100%;
+		height: 9.6rem;
+		padding: 1rem 1rem;
+		display: flex;
+		
+		background-color: white;
+		position: relative;
+
+	}
+	.customer_msg:before{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url(../../images/msg_top.png);
+		background-position: left top;
+		background-repeat: repeat-x;
+		background-size: 2rem .2rem;
+	}
+	.customer_msg:after{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url(../../images/msg_bottom.png);
+		background-position: left bottom;
+		background-repeat: repeat-x;
+		background-size: 2rem .4rem;
+	}
+	.customer_msg>dl{
+		width: 80%;
+		height: 100%;
+		margin: 0;
+	}
+	.customer_msg>dl>*{
+		width: 100%;
+		margin-bottom: 1rem;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	.customer_msg>a{
+		width: 5rem;
+		height: 2rem;
+		color: black;
+		position: absolute;
+		top:0;
+		right: 0;
+		bottom: 0;
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+	.cart_msg{
+		width: 100%;
+		margin: 1.3rem 0 5rem 0;
+		background-color: white;
+
+	}
+	.cart_msg_top_msg{
+		width: 100%;
+		height: 6rem;
+		font-size: 1.2rem;
+		padding: .8rem 1.5rem;
+		border-bottom: .1rem solid lightgray;
+		overflow: hidden;
+	}
+	.cart_msg_top_msg>span:nth-of-type(1){
+		color: #999;
+		padding-left: .3rem;
+		border-left: .5rem solid yellow;
+	}
+	.cart_msg_top_msg>span:nth-of-type(2){
+		padding: .5rem 1.8rem;
+		float: right;
+		color: red;
+		border: .1rem solid red;
+		border-radius:  1rem 1rem 1rem 1rem/ 50% 50% 50% 50%;
+	}
+	.cart_msg_top_msg>span:nth-of-type(3){
+		float: left;
+		width: 100%;
+		color: #999;
+	}
+	.cart_msg_receive_time{
+		width: 100%;
+		height: 6rem;
+		font-size: 1.2rem
+		border-bottom: .1rem solid lightgray;
+	}
+</style>

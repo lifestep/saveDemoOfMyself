@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+</head>
+<body>
+	
+</body>
+<script type="text/javascript">
+	// userAgent
+	(() => {
+		if ((window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+			//移动端浏览
+			window.location.href="./views/index_views/mobile_index.html#/";
+		}
+		else {
+	   		//桌面端
+	   		// alert("请用手机打开");
+	   		window.location.href="./views/index_views/pc_index.html#/";
+	    }
+	})()
+</script>
+</html>

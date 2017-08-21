@@ -1,0 +1,305 @@
+
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" ng-repeat="item in slide">
+        	<img src="{{item.activity.img}}" alt="">
+        </div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+</div>
+<div class="acts-icon">
+	<a href="###" ng-repeat="item in menu">
+		<img src="{{item.activity.img}}" alt="">
+		<span>{{item.activity.name}}</span>
+	</a>
+</div>
+<div class="hot_sale_data">
+    <h2>热卖精品</h2>
+    <a href="#/market" class="more_goods">更多 &gt;</a>
+    <a href="#/market" class="hot_sale_data_banner" title=""></a>
+    <ul>
+        <li ng-repeat="item in hotSaleData">
+            <img src="{{item.img}}" alt="">
+            <dl>
+                <dt>{{item.name}}</dt>
+                <dd class="goods_price">
+                    <span class="now_price">
+                    <span class="currency_code">￥</span>{{item.price}}</span>
+                    <span class="del_price">
+                    <span class="currency_code">￥</span>{{item.market_price}}</span>
+                </dd>
+                <dd class="benify_word">{{item.pm_desc}}</dd>
+                <a class="hot_sale_data_addCart glyphicon glyphicon-shopping-cart" href="javascript:;" ng-click='addThisTocartInHome(item)'>&#43;</a>
+            </dl>
+        </li>
+    </ul>
+</div>
+<div class="quick_buy">
+    <h2>秒杀-开始{{quickBuy.dateTime}}</h2>
+    <a href="#/market" class="more_goods">更多 &gt;</a>
+    <a href="#/market" class="banner_quick" title=""></a>
+    <ul>
+        <li ng-repeat="item in quickBuyGoods">
+            <img src="{{item.img}}" alt="">
+            <dl>
+                <dt>{{item.name}}</dt>
+                <dd class="goods_price">
+                    <span class="now_price"><span class="currency_code">￥</span>{{item.price}}</span>
+
+                    <span class="del_price"><span class="currency_code">￥</span>{{item.market_price}}</span>
+                </dd>
+                <dd>
+                    <button class="quick_buy_btn" ng-class="{true:'soon_tobuy',false:''}[item.enable]">{{item.enable?"马上抢购":"即将开抢"}}</button>
+                </dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+
+<style type="text/css">
+/*animate for car addition*/
+    @keyframes addAnimation{
+        0%{
+            transform: rotate(-30deg) scale(1);
+            opacity: 1;
+        }
+        10%{
+            transform: rotate(-10deg) scale(1.2);
+            opacity: 1;
+        }
+        30%{
+            transform: rotate(0deg) scale(1);
+            opacity: 1;
+        }
+        to{
+            left: 50%;
+            top: 80%;
+            transform: rotate(90deg) scale(0.2);
+            opacity: 0;
+        }
+    }
+    .addGoods{
+        width: 6rem;
+        height: 8rem;
+        border-radius: 50%;
+        position:fixed;
+        transform: rotate(0deg) scale(1);
+        animation:addAnimation 0.5s ease-out;
+    }
+	/*home style*/
+    dl{
+        margin: 0;
+    }
+	.swiper-container{
+		width: 100%;
+	}
+	.swiper-slide>img{
+		width: 100%;
+	}
+	.acts-icon{
+		margin: .5rem 0 0;
+		background-color: #fff;
+		overflow: hidden;
+		padding: 0.5rem 0;
+	}
+	.acts-icon>a{
+		float: left;
+		width: 25%;
+		text-align: center;
+		margin-bottom: 0.5rem;
+	}
+    .acts-icon>a:active img{
+        top: .2rem;
+    }
+	.acts-icon>a>img{
+		width: 100%;
+        position: relative;
+	}
+	.acts-icon>a>span{
+		color: black;
+		font-size: 1.2rem;
+		display: block;
+		margin-top: 0.5rem;
+	}
+	/*sale data*/
+
+    h2{
+        font-size: 1.6rem;
+        font-weight: bolder;
+        margin-top: 0;
+        /*background-color: purple;*/
+        /*text-align: left;*/
+        float: left;
+        margin-bottom: 0.9rem;
+        text-indent: 0.9rem;
+    }
+    .hot_sale_data h2{
+        color: olive;
+        border-left: 1rem solid olive;
+    }
+    .quick_buy h2{
+        color: green;
+        border-left: 1rem solid green;
+    }
+    .hot_sale_data_banner{
+        width: 100%;
+        height: 8rem;
+        background: url("../../images/banner_hot.jpg") center no-repeat;
+        background-size: 100% 100%;
+        float: left;
+
+    }
+    .banner_quick{
+        width: 100%;
+        height: 8rem;
+        display: block;
+        background: url("../../images/banner_quick.jpg") center no-repeat;
+        background-size: 100% 100%;
+        float: left;
+
+    }
+    .more_goods{
+        float: right;
+        font-size: 1.4rem;
+        color: lightgray;
+        padding-right: .5rem;
+    }
+	.hot_sale_data,.quick_buy{
+        width: 100%;
+        /*height: 66px;*/
+        margin: .5rem 0;
+        background: white;
+        /*text-align: center;*/
+        padding: .9rem 1% 0;
+        overflow: hidden;
+    }
+    .hot_sale_data>ul,.quick_buy>ul{
+        width: 100%;
+        margin: .5rem 0;
+        float: left;
+        display: flex;
+        flex-flow: wrap row;
+        justify-content: space-around;
+        align-content: center;
+
+
+    }
+    .quick_buy>ul{
+        padding-bottom: 4.5rem;
+    }
+    .hot_sale_data>ul>li,.quick_buy>ul>li{
+        display: inline-block;
+        width: 33.33333%;
+        cursor: pointer;
+        /*border: 1px solid lightgray;*/
+        /*text-align: center;*/
+        position: relative;
+        padding: .5rem 1% 0;
+        /*margin: .5rem 0;*/
+        /*vertical-align: top;*/
+
+    }
+    .hot_sale_data>ul>li:active,
+    .quick_buy>ul>li:active{
+        box-shadow: 0 0 .5rem 0 gray;
+    }
+    .hot_sale_data>ul>li:nth-of-type(3n-1),
+    .quick_buy>ul>li:nth-last-of-type(3n-1){
+        border-left: .1rem solid lightcyan;
+        border-right: .1rem solid lightcyan;
+        box-sizing: border-box;
+    }
+    .hot_sale_data>ul>li:nth-last-of-type(n+4),
+    .quick_buy>ul>li:nth-last-of-type(n+4){
+        border-bottom: .1rem solid lightcyan;
+
+    }
+    .hot_sale_data>ul>li>img,
+    .quick_buy>ul>li>img{
+        width: 5rem;
+        height: 5rem;
+        margin: .5rem 0 1rem 1.4rem;
+    }
+    .quick_buy_btn{
+        /*width: 6rem;*/
+        display: flex;
+        font-family: "STKaiti","SimSun";
+        outline: none;
+        border: none;
+        border-radius: .5rem;
+        background-color: transparent;
+        box-shadow: 0 0 .5rem 0 red inset;
+        color: red;
+        margin: 0 auto .5rem;
+        justify-content: center;
+    }
+    .soon_tobuy{
+        background-color: red;
+        color: white;
+    }
+    .hot_sale_data dt,.quick_buy dt{
+    	font-weight: normal;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .specifics{
+        /*width: 50px;*/
+        font-size: 1.2rem;
+        
+        text-align: right;
+    	/*position: absolute;
+    	right: 0rem;
+    	top: 6rem;*/
+        color: lightgray;
+        /*white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;*/
+    }
+    .goods_price{
+        display: block;
+        width: 100%;
+        padding: 1.6rem 0 0;
+        white-space: nowrap;
+    }
+    .currency_code{
+        font-size: .5rem;
+        vertical-align: top;
+    }
+    .del_price{
+        /*display: inline-block;*/
+        /*width: 3rem;*/
+    	color: lightgray;
+        /*white-space: nowrap;
+        vertical-align: bottom;*/
+    	text-decoration: line-through; 
+        font-size: 1.2rem;
+        position: absolute;
+        top: 8.6rem;
+        left: .5rem;
+    }
+    .now_price{
+    	color: red;
+        font-size: 1.4rem;
+    }
+    .benify_word{
+    	position: absolute;
+    	top: 0rem;
+    	left: 0rem;
+        display: inline-block;
+        border-radius: .3rem;
+        color: white;
+        background-color: rgba(255,0,0,0.5);
+    	font-size: 1.2rem;
+        font-family: "SimSun";
+        /*transform: rotate(-10deg);*/
+    }
+    .glyphicon.hot_sale_data_addCart{
+        position: absolute;
+        top: auto;
+        right: .5rem;
+        bottom: .5rem;
+        color: red;
+    }
+</style>

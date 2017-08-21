@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Document</title>
+	<script type="text/javascript">
+		// userAgent
+		(() => {
+			if (!(window.navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+		   		//桌面端
+		   		window.location.href="./pc_index.html#/";
+		    }
+		})()
+	</script>
+	<link rel="stylesheet" href="../../style/libs/reset.css">
+	<link rel="stylesheet" href="../../style/libs/swiper-3.4.2.min.css">
+	<link rel="stylesheet" type="text/css" href="../../style/libs/bootstrap.min.css">
+	<style type="text/css">
+		html{
+			width: 100%;
+			height: 100%;
+			font-size: 10px;
+			position: relative;
+		}
+		.hidden{
+			display: none;
+		}
+		.visited{
+			display: block;
+		}
+		.container{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background-color: #e5e5e5;
+			padding: 0;
+		}
+		header{
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 4.5rem;
+			background-color: #ffd600;
+		}
+		.header-content-cart{
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 4.5rem;
+			text-align: center;
+			line-height: 4.5rem;
+			font-weight: bolder;
+			background-color: #F9FAFD;
+		}
+		.header-content{
+			position: absolute;
+			left: 6rem;
+			right: 6rem;
+			height: 4.5rem;
+			text-align: center;
+		}
+		.header-content span{
+			line-height: 4.5rem;
+			font-weight: 700;
+			font-size: 1.4rem;
+		}
+		.header-content span:after{
+			content: "▼";
+		}
+		.search{
+			position: absolute;
+			right: 1rem;
+			width: 6rem;
+			height: 4.4rem;
+			background-image: url("../../images/serach.png");
+			background-repeat: no-repeat;
+			-webkit-background-size: auto 2.5rem;
+			background-size: auto 2.5rem;
+			background-position: right .5rem;
+			text-align: right;
+			line-height: 7rem;
+		}
+		nav{
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			height: 5rem;
+			background-color: rgba(254,254,254,0.9);
+		}
+		nav>a{
+			float: left;
+			width: 25%;
+			height: 4rem;
+			padding-top: 1rem;
+			text-align: center;
+			color: #777;
+		}
+		nav>a>span{
+			display: block;
+			width: 100%;
+			height: 2rem;
+			-webkit-background-size: auto 2rem;
+			background-size: auto 2rem;
+			background-position: center 0;
+			margin-bottom: .5rem;
+			background-repeat: no-repeat;
+		}
+		@-webkit-keyframes navs{
+			0%{
+				-webkit-background-size: auto .5rem;
+				background-size: auto .5rem;
+			}
+			20%{
+				-webkit-background-size: auto 1.2rem;
+				background-size: auto 1.2rem;
+			}
+			40%{
+				-webkit-background-size: auto .8rem;
+				background-size: auto .8rem;
+			}
+			60%{
+				-webkit-background-size: auto 2.2rem;
+				background-size: auto 2.2rem;
+			}
+			80%{
+				-webkit-background-size: auto 1.6rem;
+				background-size: auto 1.6rem;
+			}
+			100%{
+				-webkit-background-size: auto 2rem;
+				background-size: auto 2rem;
+			}
+		}
+		@keyframes navs{
+			0%{
+				-webkit-background-size: auto .5rem;
+				background-size: auto .5rem;
+			}
+			20%{
+				-webkit-background-size: auto 1.2rem;
+				background-size: auto 1.2rem;
+			}
+			40%{
+				-webkit-background-size: auto .8rem;
+				background-size: auto .8rem;
+			}
+			60%{
+				-webkit-background-size: auto 2.2rem;
+				background-size: auto 2.2rem;
+			}
+			80%{
+				-webkit-background-size: auto 1.6rem;
+				background-size: auto 1.6rem;
+			}
+			100%{
+				-webkit-background-size: auto 2rem;
+				background-size: auto 2rem;
+			}
+		}
+		
+
+		nav>a.active>span{
+			-webkit-animation: navs 1s;
+			animation: navs 1s;
+		}
+		nav>a.home>span{
+			background-image: url("../../images/home.png");
+		}
+		nav>a.current>span{
+			background-image: url("../../images/current.png");
+		}
+		nav>a.cart{
+			position: relative;
+		}
+		nav>a.cart>span{
+			background-image: url("../../images/cart.png");
+		}
+		.showAddCount{
+			position: absolute;
+			top: 0rem;
+			right: .5rem;
+			width: 2rem;
+			height: 2rem;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 2rem; 
+			background-color: red;
+			color: white;
+		}
+		nav>a.mine>span{
+			background-image: url("../../images/mine.png");
+		}
+		nav>a.home.active>span{
+			background-image: url("../../images/home-active.png");
+		}
+		nav>a.current.active>span{
+			background-image: url("../../images/current-active.png");
+
+		}
+		nav>a.cart.active>span{
+			background-image: url("../../images/cart-active.png");
+		}
+		nav>a.mine.active>span{
+			background-image: url("../../images/mine-active.png");
+
+		}
+		nav>a:hover{
+			text-decoration: none;
+			color: gray;
+		}
+
+		/*set main*/
+		main{
+			position: absolute;
+			top: 4.5rem;
+			right: 0;
+			bottom:0;
+			left: 0;
+			overflow: scroll;
+			overflow-x: hidden;
+
+		}
+		@keyframes addGoodsCountAnimate{
+			from{
+				transform-origin: 50% 50%;
+				transform: scale(0.8);
+			}
+			to{
+				transform-origin: 50% 50%;
+				transform: scale(1.2);
+			}
+		}
+		.addGoodsCount{
+			animation: addGoodsCountAnimate 0.2s ease-out;
+		}
+	</style>
+</head>
+<body ng-controller="myCtrl">
+
+<div class="container">
+	<div class="header-content-cart" ng-class="{true:'hidden',false:'visited'}[headerContentVisited]">
+			购物车
+	</div>
+	<header ng-class="{false:'hidden',true:'visited'}[headerContentVisited]">
+		<div class="header-content">
+			<span>{{myLocation}}</span>
+		</div>
+		<span class="search">搜索</span>
+	</header>
+	<main ng-view>
+		<!--////////////show different views//////////-->
+	</main>
+	<nav>
+		<a href="#/" class="home" ng-click='showActive1()'
+			ng-class="{1:'active',2:'',3:'',4:''}[nav_active]">
+			<span>&nbsp;</span>
+			首页
+		</a>
+		<a href="#/market" class="current" ng-click='showActive2()'
+			ng-class="{1:'',2:'active',3:'',4:''}[nav_active]">
+			<span>&nbsp;</span>
+			闪送超市
+		</a>
+		<a href="#/cart" class="cart" ng-click='showActive3()'
+			ng-class="{1:'',2:'',3:'active',4:''}[nav_active]">
+			<span>
+				<var class="showAddCount" ng-class="{'visited':cartGoodsCount > 0,
+							'hidden':cartGoodsCount <= 0,
+							'addGoodsCount':addGoodsCountActive}"
+				ng-bind="cartGoodsCount">&nbsp;</var>
+				</span>
+			购物车
+		</a>
+		<a href="#/mine" class="mine" ng-click='showActive4()'
+			ng-class="{1:'',2:'',3:'',4:'active'}[nav_active]">
+			<span>&nbsp;</span>
+			我的
+		</a>
+	</nav>
+</div>
+</body>
+<!-- judge onload -->
+<script type="text/javascript" src="../../js/onload.js"></script>
+<!-- navigation location -->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mWZz9KMsG4ZKQaGA6OfDneVr15Gl0VBo"></script>  
+<script type="text/javascript" src="../../js/libs/swiper-3.4.2.min.js"></script>
+<script type="text/javascript" src="../../js/libs/angular.min.js"></script>
+<script type="text/javascript" src="../../js/libs/angular-route.js"></script>
+<script type="text/javascript">
+	let resetFontSize=()=>{
+		// 获取屏幕的宽度
+		var windowW = document.documentElement.clientWidth;
+		// 是以iphone5作为参考
+		var scale = windowW/320;
+		var newSize = 10*scale;
+		document.getElementsByTagName("html")[0].style.fontSize=newSize+"px";
+	}
+	window.addEventListener("resize", resetFontSize, false);
+	resetFontSize();    
+
+	// 初始化 route
+	var app = angular.module("myApp",["ngRoute"]);
+	app.controller("myCtrl",["$scope","$timeout","$rootScope",function($scope,$timeout,$rootScope){
+//  cartGoodsCount
+		$rootScope.cartGoodsCount = 0;
+		$rootScope.addGoodsCountActive = false;
+		function cartGoodsCountMethod(){	
+			$scope.cartGoodsCount = $rootScope.cartGoodsCount;
+			$scope.addGoodsCountActive = $rootScope.addGoodsCountActive;
+		}
+		cartGoodsCountMethod();
+		$rootScope.cartGoodsCountMethod = cartGoodsCountMethod;
+//  save goods in cart 
+		$rootScope.cartGoodsAll = [];
+		// add goods in all ease
+		function saveGoodsInCart(item){
+			item.count = item.count? item.count+1:1;
+			for(let i=0; i<$rootScope.cartGoodsAll.length; i++){
+				if($rootScope.cartGoodsAll[i] == item){
+					console.log($rootScope.cartGoodsAll);
+					return;
+				}
+			}
+			$rootScope.cartGoodsAll.push(item);
+			console.log($rootScope.cartGoodsAll);
+		}
+		$rootScope.saveGoodsInCart = saveGoodsInCart;
+
+
+		// nav show active
+		function judgeNavActive(){
+			let nowLinkedUrl = window.location.hash;
+			if(nowLinkedUrl.includes('#/market')){
+				$scope.nav_active = 2;
+				$scope.headerContentVisited=true;
+			}else if(nowLinkedUrl.includes('#/mine')){
+				console.log('a')
+				$scope.nav_active = 4;
+				$scope.headerContentVisited=false;
+			}else if(nowLinkedUrl.includes('#/cart')){
+				$scope.nav_active = 3;
+				$scope.headerContentVisited=false;
+			}else{
+				$scope.nav_active = 1;
+				$scope.headerContentVisited=true;
+			}
+		}
+		judgeNavActive();
+		$rootScope.judgeNavActive = judgeNavActive;
+			// 百度地图API功能
+		var geolocation = new BMap.Geolocation();
+		var map = new BMap.Map();
+		function myFun(result){
+			var cityName = result.name;
+			$timeout(function(){
+				if(geolocation.getStatus() == 0){
+					$scope.myLocation = cityName;
+				}else{
+					$scope.myLocation = "请手动选择";
+				}
+			}, 3000);
+		}
+		var myCity = new BMap.LocalCity();
+		myCity.get(myFun);
+
+		$scope.headerContentVisited=true;
+		$scope.showActive1 = () =>{
+			$scope.nav_active = 1;
+			$scope.headerContentVisited=true;
+		}
+		$scope.showActive2 = () =>{
+			$scope.nav_active = 2;
+			$scope.headerContentVisited=true;
+		}
+		$scope.showActive3 = () =>{
+			$scope.nav_active = 3;
+			$scope.headerContentVisited=false;
+		}
+		$scope.showActive4 = () =>{
+			$scope.nav_active = 4;
+			$scope.headerContentVisited=false;
+		}
+		
+		
+	}])
+
+	app.config(["$routeProvider",function($routeProvider){
+		$routeProvider
+			.when("/",{
+				templateUrl : "../home.html",
+				controller: "myCtrl_slide"
+			})
+			.when('/market',{
+				templateUrl: '../market.html',
+				controller: 'myCtrl_market'
+			})
+			.when('/cart',{
+				templateUrl: '../cart.html',
+				controller: 'myCtrl_cart'
+			})
+			.when('/mine',{
+				templateUrl: '../mine.html',
+				// controller: 'myCtrl_mine'
+			})
+
+	}])
+</script>
+<script type="text/javascript" src="../../js/controller.js"></script>
+</html>

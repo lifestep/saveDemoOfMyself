@@ -1,0 +1,299 @@
+<article class="category">
+	<div class="category_nav">
+		<ul>
+			<li ng-repeat="item in marketMenu track by $index" ng-click="categoryNavActive($index)">
+				<span ng-class="{true:'category_nav_list_active'}[category_nav_active=={{$index}}]">{{item.name}}</span>
+			</li>
+		</ul>
+	</div>
+	<div class="category_body">
+		<div class="category_body_title">
+			
+			<div class="category_body_title_left">
+				<span ng-click='categoryTurnItemOther()'>{{categoryTurnItemOtherTitle}}<var ng-class="{true:'turnActive'}[aroundActiveOther]"></var></span>
+				<div class="category_body_title_left_content"  ng-class="{true:'visited',false:'hidden'}[aroundActiveOther]">
+					<ul>
+						<li ng-class="{true:'category_body_title_active'}[categoryTurnItemOtherItemCount == $index]"
+							 ng-click='categoryTurnItemOtherItem($index,item)'
+							ng-repeat="item in marketGoodsVariety track by $index">{{item.name}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="category_body_title_right">
+				<span ng-click='categoryTurnItemOne()'>{{categoryTurnItemOneItemTitle}} <var ng-class="{true:'turnActive'}[aroundActiveOne]"></var></span>
+				<div class="category_body_title_right_content" ng-class="{true:'visited',false:'hidden'}[aroundActiveOne]">
+					<ul>
+						<li ng-click='categoryTurnItemOneItem(0)'
+							ng-class="{0:'category_body_title_active'}[categoryTurnItemOneItemCount]">综合排序</li>
+						<li ng-click='categoryTurnItemOneItem(1)'
+							ng-class="{1:'category_body_title_active'}[categoryTurnItemOneItemCount]">价格最高</li>
+						<li ng-click='categoryTurnItemOneItem(2)'
+							ng-class="{2:'category_body_title_active'}[categoryTurnItemOneItemCount]">价格最低</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<div class="category_body_items">
+			<ul>
+				<li ng-repeat="item in marketGoods | filter: myFilters">
+					<dl>
+						<dt>
+							<img src="{{item.img}}" alt="">
+						</dt>
+						<dd>{{item.name}}</dd>
+						<dd class="category_body_items_detail">
+							<div>
+								<span>{{item.specifics}}</span>
+								<span>¥{{item.price}}</span>
+							</div>
+							<div ng-click="addThisTocart(item)" class="category_body_items_cart glyphicon glyphicon-shopping-cart"></div>
+						</dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+		<div ng-click="closeCoverWrap()" class="coverWrap" ng-class="{true:'visited',false:'hidden'}[aroundActiveOther || aroundActiveOne]"></div>
+	</div>
+</article>
+
+<style type="text/css">
+/*animate for car addition*/
+	@keyframes addAnimation{
+		0%{
+			transform: rotate(-30deg) scale(1);
+			opacity: 1;
+		}
+		10%{
+			transform: rotate(-10deg) scale(1.2);
+			opacity: 1;
+		}
+		30%{
+			left: 40%;
+			transform: rotate(0deg) scale(1);
+			opacity: 1;
+		}
+		to{
+			left: 50%;
+			top: 80%;
+			transform: rotate(90deg) scale(0.2);
+			opacity: 0;
+		}
+	}
+	.addGoods{
+		width: 6rem;
+		height: 8rem;
+		border-radius: 50%;
+		position:fixed;
+		transform: rotate(0deg) scale(1);
+		animation:addAnimation 0.5s ease-out;
+	}
+
+	.category_body_items>ul{
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		overflow-y: scroll;
+		z-index: 2;
+	}
+	.category_body_items>ul>li{
+		box-sizing: border-box;
+		width: 100%;
+		height: 9.2rem;
+		padding: .6rem;
+		border-bottom: .1rem solid #e0e0e0;
+	}
+	.category_body_items dl{
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		overflow: hidden;
+	}
+	.category_body_items dl>dt{
+		float: left;
+		width: 6rem;
+		height: 8rem;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.category_body_items dl>dt>img{
+		width: 100%;
+		height: 100%;
+	}
+	.category_body_items dl>dd{
+		width: 10rem;
+		float: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.category_body_items_detail{
+		width: 10rem;
+		padding-top: 2rem;
+	}
+	.category_body_items_detail>div{
+		width: 5rem;
+		float: left;
+	}
+	.category_body_items_detail span:nth-of-type(1){
+		display: block;
+		color: #e0e0e0;
+		margin-bottom: 0.5rem;
+	}
+	.category_body_items_detail span{
+		display: block;
+		color: red;
+	}
+	.category_body_items_cart{
+		color: red;
+		font-size: 2rem;
+		text-align: right;
+		padding-top: 1.5rem;
+	}
+
+
+	.turnActive{
+		transition: 0.5s;
+		transform: rotate(180deg);
+	}
+	.hidden{
+		display: none;
+	}
+	.visited{
+		display: block;
+	}
+	.category{
+		width: 100%;
+		height: 100%;
+		font-size: 1rem;
+		margin-bottom: 5rem;
+		background-color: white;
+	}
+	.category_nav{
+		position: fixed;
+		left: 0;
+		top: 4.5rem;
+		width: 23.4375%;
+		height: 100%;
+		overflow-y: scroll;
+	}
+	.category_nav>ul{
+		width: 100%;
+		height: 100%;
+		background-color:#F8F8F8;
+
+	}
+	.category_nav>ul>li{
+		width: 100%;
+		padding: 0.3rem 0;
+		border-bottom: 0.1rem solid #E0E0E0;
+
+	}
+	.category_nav_list_active{
+		border-left: .6rem solid #FFD600;
+	}
+	.category_nav>ul>li>span{
+		display: block;
+		width: 100%;
+		height: 3.5rem;
+		line-height: 3.5rem;
+		text-align: center;
+	}
+
+
+	.category_body{
+		float: right;
+		width: 76%;
+		height: 100%;
+		position: relative;
+	}
+	.category_body_title{
+		position: fixed;
+		top: 4.5rem;
+		right: 0;
+		width: 76%;
+		height: 4.2rem;
+		border-bottom: 0.1rem solid #E0E0E0;
+		/*line-height: 4.2rem;*/
+		font-size: 1.2rem;
+		z-index: 3;
+	}
+	.category_body_title_left,
+	.category_body_title_right{
+		width: 50%;
+		height:100%;
+		float: left;
+		text-align: center;
+		line-height: 2.2rem;
+		color: #737075;
+		position: relative;
+
+	}
+	.category_body_title_right{
+		float: right;
+	}
+	.category_body_title_right>span{
+		width: 100%;
+		height: 2.2rem;
+		position: absolute;
+		right: 0;
+		top:0;
+		bottom: 0;
+		margin: auto 0;
+	}
+	.category_body_title_left>span{
+		width: 100%;
+		height: 2.2rem;
+		position: absolute;
+		left: 0;
+		top:0;
+		bottom: 0;
+		margin: auto 0;
+		border-right: .1rem solid #E0E0E0;
+	}
+	.category_body_title_left>span>var,
+	.category_body_title_right>span>var{
+		display: inline-block;
+		width: 1.2rem;
+		height: .8rem;
+		background: url("../../images/category_demo.png") center no-repeat;
+		background-size: 100%;
+		transition: 0.5s;
+	}
+	.coverWrap{
+		position: fixed;
+		width: 76%;
+		top: 8.6rem;
+		right: 0;
+		bottom: 5rem;
+		background-color: rgba(0,0,0,0.2);
+	}
+	.category_body_title_left_content>ul,
+	.category_body_title_right_content>ul{
+		position: fixed;
+		width: 76%;
+		top: 8.7rem;
+		right: 0;
+		background-color: rgba(255,255,255,1);
+		padding-bottom: .9rem;
+	}
+	.category_body_title_active{
+		background-color: #FFF9D9;
+	}
+	.category_body_title_left_content>ul>li,
+	.category_body_title_right_content>ul>li{
+		float: left;
+		margin: .9rem 0 0 .9rem;
+		padding: 0 .8rem;
+		border: .1rem solid #FFD600;
+		border-radius: .4rem;
+	}
+	.category_body_items{
+		position: fixed;
+		top: 8.7rem;
+		right: 0;
+		bottom: 5rem;
+		width: 76%;
+	}
+</style>
